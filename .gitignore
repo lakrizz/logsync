@@ -25,6 +25,7 @@ go.work.sum
 .env
 
 /target
+/test
 /git
 config.json
 .hugo_build.lock
