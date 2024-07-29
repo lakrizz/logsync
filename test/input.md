@@ -1,0 +1,5 @@
+- irgendwie nen "text ist gehighlighted" effekt einbauen
+- ![image.png](../assets/image_1718226888986_0.png)
+- so aber anders, also so in gut :D
+- idea: ![image.png](../assets/image_1718277928523_0.png)
+-
