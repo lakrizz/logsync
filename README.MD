@@ -8,7 +8,7 @@ By combining your `logseq` and your `hugo` repositories (in different ways: `log
 
 ## Installation
 
-Install via `go install github.com/lakrizz/logsync`. Other ways to install them are currently not available.
+Install via `go install github.com/lakrizz/logsync@latest`. Other ways to install them are currently not available.
 
 ## Configuration
 Place a file called `config.json` in your [`XDG_CONFIG_HOME`](https://wiki.archlinux.org/title/XDG_Base_Directory)  directory, you can find a skeleton in  `/examples/config.json` in this very repository. For `logsync` to work properly, you currently need to create a [GitHub Access Token](https://github.com/settings/tokens) with the following Permissions: `admin:repo_hook, repo`. Additionally you (currently) need to provide an Auth Token for the reverse proxy service [`ngrok`](https://ngrok.com/), if you're already logged in, click [this link](https://dashboard.ngrok.com/tunnels/authtokens). You can replace the Placeholder values in the given `config.json`. The following values need to be set:
