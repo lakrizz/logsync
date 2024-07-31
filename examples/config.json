@@ -1,0 +1,28 @@
+{
+  "git": {
+    "github_token": "<github token here>",
+    "logseq_repo_url": "<git logseq repository url>",
+    "hugo_repo_path": "<your local hugo repository path>",
+    "private_key_path": "link your ssh key, most likely: /home/<your username>/.ssh/id_rsa",
+    "private_key_password": "",
+    "username": "<your username>",
+    "email": "<your email>"
+  },
+  "ngrok": {
+    "auth_token": "<enter your ngrok auth token>"
+  },
+  "mappings": [
+    {
+      "source": "pages/projects.md",
+      "target": "content/projects/_index.md",
+      "frontmatter": {
+        "draft": false
+      },
+      "options": {
+        "remove_internal_links": true,
+        "remove_empty_trails": true,
+        "include_attachments": true
+      }
+    }
+  ]
+}
