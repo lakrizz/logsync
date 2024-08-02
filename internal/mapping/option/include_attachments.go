@@ -27,7 +27,6 @@ func (r *IncludeAttachments) IsEnabled(opts *config.Options) (bool, error) {
 }
 
 func (r *IncludeAttachments) Apply(input string) (string, error) {
-	slog.Info("applying attachment copier")
 	// now iterate through all links, check if they're internal
 	// redirect them, etc.
 	// and hit next recursion level

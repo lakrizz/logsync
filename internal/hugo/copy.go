@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"gopkg.in/src-d/go-billy.v4"
 	"gopkg.in/src-d/go-git.v4"
 	"gopkg.in/src-d/go-git.v4/plumbing/object"
 
@@ -18,13 +19,13 @@ import (
 	"github.com/lakrizz/logsync/internal/mapping"
 )
 
-func HandleModifiedPages(files []string, cfg *config.Config, logseq_repo, hugo_repo *git.Repository) error {
-	logseqWorktree, err := logseq_repo.Worktree()
+func HandleModifiedPages(files []string, cfg *config.Config, logseqRepository, hugoRepository *git.Repository, log *slog.Logger) error {
+	logseqWorktree, err := logseqRepository.Worktree()
 	if err != nil {
 		return err
 	}
 
-	hugoWorktree, err := hugo_repo.Worktree()
+	hugoWorktree, err := hugoRepository.Worktree()
 	if err != nil {
 		return err
 	}
@@ -37,34 +38,37 @@ func HandleModifiedPages(files []string, cfg *config.Config, logseq_repo, hugo_r
 			continue
 		}
 
+		var sourceFile billy.File
+		var targetFile billy.File
+		var parsedPage *mapping.LogseqPage
 		target := cfg.Mappings[i]
 
-		sourceFS, err := logseqWorktree.Filesystem.Open(file)
+		sourceFile, err = logseqWorktree.Filesystem.Open(file)
 		if err != nil {
 			return err
 		}
 
-		targetFile, err := hugoWorktree.Filesystem.Create(target.Target)
+		targetFile, err = hugoWorktree.Filesystem.Create(target.Target)
 		if err != nil {
 			return err
 		}
 
-		slog.Info("parsing logseq file...", "filename", logseqWorktree.Filesystem.Root())
+		log.Info("parsing logseq file...", "filename", logseqWorktree.Filesystem.Root())
 		// here we need to convert the logseq pages to hugo pages
 		// by adding frontmatter, etc.
-		parsedPage, err := mapping.ParsePage(slog.Default(), filepath.Join(logseqWorktree.Filesystem.Root(), sourceFS.Name()), target)
+		parsedPage, err = mapping.ParsePage(log, filepath.Join(logseqWorktree.Filesystem.Root(), sourceFile.Name()), target)
 
 		if err != nil {
 			return err
 		}
 
-		slog.Info("copying new hugo file")
+		log.Info("copying new hugo file")
 		err = parsedPage.Save(filepath.Join(hugoWorktree.Filesystem.Root(), targetFile.Name()))
 		if err != nil {
 			return fmt.Errorf("cannot copy file: %w", err)
 		}
 
-		slog.Info("adding file to index")
+		log.Info("adding file to index")
 		_, err = hugoWorktree.Add(targetFile.Name())
 		if err != nil {
 			return fmt.Errorf("cannot add to worktree: %w", err)

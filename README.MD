@@ -63,6 +63,7 @@ This option, if enabled, will remove empty list items from the tail of the mappe
 ```
 
 #### Recursion
+> **Attention**: This option is currently not available 
 
 This option, if enabled, will also map `n` levels of links (given by the option `recursion_depth` [defaults to 1]), counting from the given `source` page, if this option is enabled, it requires a `recursion_target`, which needs to be a directory. Additionally you can set `recursion_skip_source` to `true` if you don't want the `source` page to be mapped to your target static page generator (e.g., for blog posts), this setting defaults to `false`
 
