@@ -128,7 +128,7 @@ func main() {
 		log.Info("successfully pushed changes from hugo repository")
 
 		// send all new and changed files to the hugo function
-		err = hugo.HandleModifiedPages(changedFiles, cfg, logseqRepo, hugoRepo)
+		err = hugo.HandleModifiedPages(changedFiles, cfg, logseqRepo, hugoRepo, log)
 		if err != nil {
 			log.Error("error handling modified pages", "error", err)
 			git.Reset(hugoRepo)
