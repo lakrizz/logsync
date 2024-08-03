@@ -4,7 +4,7 @@
 Logsync is a little tool that automatically synchronizes a configured set of logseq pages with a static page generator (currently only `hugo`). The mapping is given by a configuration file (see section "*Configuration*")
 
 ## How does it do it?
-By combining your `logseq` and your `hugo` repositories (in different ways: `logseq` is being pulled/cloned automatically, `hugo` should be an already cloned repository), `ngrok` as a reverse proxy and your `openssh` for authentication against github to create a webhook for your `logseq`repository.
+By combining your `logseq` and your `hugo` repositories (in different ways: `logseq` is being pulled/cloned automatically, `hugo` should be an already cloned repository), `ngrok` as a reverse proxy and your `openssh` for authentication against github to create a webhook for your `logseq`repository. `Hugo` is not automatically executed (anymore), so i suggest you either to use the internal hugo server (`hugo serve`) or the automatic fs-watcher on your `hugo` server (execute `hugo --watch`).
 
 ## Installation
 

@@ -3,9 +3,7 @@ package config
 import (
 	"encoding/json"
 	"errors"
-	"log/slog"
 	"os"
-	"os/exec"
 	"path/filepath"
 
 	"github.com/adrg/xdg"
@@ -16,8 +14,7 @@ var (
 )
 
 type Config struct {
-	HugoExecutable string `json:"-"`
-	Git            *struct {
+	Git *struct {
 		Token              string `json:"token"`
 		LogseqRepoURL      string `json:"logseq_repo_url"`
 		HugoRepoPath       string `json:"hugo_repo_path"`
@@ -72,11 +69,6 @@ func Load() (*Config, error) {
 		return nil, err
 	}
 
-	err = cfg.trySetHugoExecutable()
-	if err != nil {
-		return nil, err
-	}
-
 	err = cfg.SetStaticValuesForAllOptions()
 	if err != nil {
 		return nil, err
@@ -85,24 +77,8 @@ func Load() (*Config, error) {
 	return cfg, nil
 }
 
-func (c *Config) trySetHugoExecutable() error {
-	path, err := exec.LookPath("hugo")
-	if err != nil {
-		return err
-	}
-
-	slog.Info("found hugo executable", "path", path)
-
-	c.HugoExecutable = path
-	return nil
-}
-
 func (c *Config) IsValid() (bool, error) {
 	errs := make([]error, 8) // we have 8 required config fields, might as well reserve the mem now
-
-	if c.HugoExecutable == "" {
-		errs = append(errs, errors.New("hugo executable not found"))
-	}
 
 	if c.Git.Token == "" {
 		errs = append(errs, errors.New("github token not"))
