@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -80,16 +78,6 @@ func HandleModifiedPages(files []string, cfg *config.Config, logseqRepository, h
 	_, err = hugoWorktree.Commit(commitMessage, &git.CommitOptions{Author: &object.Signature{Name: cfg.Git.Username, Email: cfg.Git.Email, When: time.Now()}})
 	if err != nil {
 		return errors.Join(errors.New("cannot commit"), err)
-	}
-
-	// now we copied the files and created and pushed the commits
-	// problem here is that we cloned the hugo_repo ourselves
-	os.Chdir(hugoWorktree.Filesystem.Root())
-	cmd := exec.Command(cfg.HugoExecutable)
-
-	_, err = cmd.CombinedOutput()
-	if err != nil {
-		return errors.Join(errors.New("cannot execute hugo"), err)
 	}
 
 	return nil
