@@ -1,6 +1,9 @@
 
 
-# logsync
+# Logsync
+
+> **Note:** This is at most early alpha-level stuff, i've not been working on this for a few months.
+
 Logsync is a little tool that automatically synchronizes a configured set of logseq pages with a static page generator (currently only `hugo`). The mapping is given by a configuration file (see section "*Configuration*")
 
 ## How does it do it?
